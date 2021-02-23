@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,39 +19,59 @@ class HomePage extends StatelessWidget {
             title: Text('Diecee'),
             backgroundColor: Colors.red,
           ),
-          body: Diecee()),
+          body: DiecePage()),
     );
   }
 }
 
-class Diecee extends StatelessWidget {
+class DiecePage extends StatefulWidget {
+  @override
+  _DiecePageState createState() => _DiecePageState();
+}
+
+class _DiecePageState extends State<DiecePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+    return Center(
+      child: Row(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'images/dice1.png',
-                width: 100.0,
-                height: 100.0,
-              ),
-              SizedBox(
-                width: 20.0,
-              ),
-              Image.asset(
-                'images/dice2.png',
-                width: 100.0,
-                height: 100.0,
-              ),
-            ],
-          )
+          Diece(),
+          Diece(),
         ],
       ),
     );
+  }
+}
+
+class Diece extends StatefulWidget {
+  Diece({Key key}) : super(key: key);
+
+  @override
+  _DieceState createState() => _DieceState();
+}
+
+class _DieceState extends State<Diece> {
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: FlatButton(
+        onPressed: () {
+          changeDieceFace();
+        },
+        child: Image.asset(
+          'images/dice$rightDieceNumber.png',
+        ),
+      ),
+    );
+  }
+
+  int leftDieceNumber = 1;
+  int rightDieceNumber = 1;
+
+  void changeDieceFace() {
+    setState(() {
+      leftDieceNumber = Random().nextInt(6) + 1;
+      rightDieceNumber = Random().nextInt(6) + 1;
+    });
   }
 }
